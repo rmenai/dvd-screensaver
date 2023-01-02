@@ -1,0 +1,44 @@
+### Nuxt.js
+# Logs.
+logs
+*.log
+*.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+.DS_Store
+dist
+dist-ssr
+coverage
+*.local
+
+/cypress/videos/
+/cypress/screenshots/
+
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+tests/e2e/artifacts/
+tests/e2e/report/
+tests/unit/coverage/
+
+.nuxt/
+nuxt.d.ts
+.nitro
+.cache
+.output/
+.env
+
+### Editors template
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

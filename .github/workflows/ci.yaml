@@ -1,0 +1,80 @@
+name: CI
+
+on: [push, workflow_dispatch]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+          cache: "yarn"
+
+      # Install our dependencies if we did not restore a dependency cache.
+      - name: Install dependencies using yarn
+        run: yarn --frozen-lockfile --prefer-offline
+
+      - name: Run linting
+        run: yarn lint
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+          cache: "yarn"
+
+      # Install our dependencies if we did not restore a dependency cache.
+      - name: Install dependencies using yarn
+        run: yarn --frozen-lockfile --prefer-offline
+
+      - name: Install PlayWright dependencies
+        run: npx playwright install --with-deps
+
+      # Required for e2e tests.
+      - name: Build the project
+        run: yarn build
+
+      - name: Run unit and e2e tests
+        run: |
+          yarn test:unit:ci --coverage
+          yarn test:e2e:ci
+
+      - name: Upload e2e test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright
+          path: |
+            tests/e2e/report
+            tests/e2e/artifacts
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: .output
+
+      - name: Upload coverage reports to CodeCov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # Only needed for private repositories.
+          directory: tests/unit/coverage
+          flags: unittests
