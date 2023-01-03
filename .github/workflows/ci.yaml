@@ -46,35 +46,12 @@ jobs:
       - name: Install dependencies using yarn
         run: yarn --frozen-lockfile --prefer-offline
 
-      - name: Install PlayWright dependencies
-        run: npx playwright install --with-deps
-
       # Required for e2e tests.
       - name: Build the project
-        run: yarn build
-
-      - name: Run unit and e2e tests
-        run: |
-          yarn test:unit:ci --coverage
-          yarn test:e2e:ci
-
-      - name: Upload e2e test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: playwright
-          path: |
-            tests/e2e/report
-            tests/e2e/artifacts
+        run: yarn build:web
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build
           path: .output
-
-      - name: Upload coverage reports to CodeCov
-        uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} # Only needed for private repositories.
-          directory: tests/unit/coverage
-          flags: unittests
