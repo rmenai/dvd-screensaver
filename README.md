@@ -25,30 +25,11 @@ The requirements are:
    ```shell
    yarn
    ```
-2. Optionally, you can install playwright to run the e2e tests
-   ```shell
-   npx playwright install --with-deps
-   ```
-
-## Environment Variables
-
-To run this project, create a `.env` file in the root directory and add the following environment variables:
-
-| Variable | Description             | Default |
-|----------|-------------------------|---------|
-| SITE_URL | The url of your website | ""      |
 
 ## Usage
 
-In order to start the website, you will need to run the NPM scripts that are available in the package.json file,
-using `yarn` or `npm run`. Here are the most important ones:
-
-- **`dev`**: Starts the development server in http://localhost:3000.
-- **`build`**: Builds your application for production. The output folder is `.output`.
-- **`preview`**: Previews the production build from `.output` locally.
-- **`test:unit`**: Runs the unit tests using [Vitest].
-- **`test:e2e`**: Runs the end-to-end tests using [Playwright].
-- **`lint`**: Lints the project using [ESLint].
+In the releases page, download the lastest version corresponding to your OS.
+After the installation is complete, you can search for the app and run it.
 
 ## License
 
