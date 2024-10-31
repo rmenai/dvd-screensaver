@@ -6,6 +6,8 @@
 - [Usage](#usage)
 - [License](#license)
 
+![Preview](./preview.png)
+
 ## Installation
 
 The first step will be to clone the repo
